@@ -1,0 +1,9 @@
+name: PlotMeHookExample
+main: com.worldcretornica.plotmehookexample.PlotMeHookExample
+version: '0.1'
+author: ZachBora
+depend: [PlotMe]
+description: >
+             Example plugin hooking to PlotMe
+commands:
+  plotmehook:
