@@ -48,6 +48,10 @@ public class PlotMeHookExample extends JavaPlugin {
     		                Location top = PlotManager.getPlotTopLoc(p.getWorld(), plot.id);
     		                
     		                p.sendMessage("The plot coords are " +  bottom.toString() + " to " + top.toString());
+    		                
+    		                Location home = PlotManager.getPlotHome(p.getWorld(), plot);
+    		                
+    		                p.sendMessage("The plot home is located at " + home.toString());
     		            } else {
     		                p.sendMessage("You are standing in an unclaimed plot.");
     		            }
