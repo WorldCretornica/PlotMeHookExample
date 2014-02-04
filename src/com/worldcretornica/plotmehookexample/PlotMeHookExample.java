@@ -19,7 +19,7 @@ public class PlotMeHookExample extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-
+		//put code that detects if plotme plugin is present
 	}
 	
 	@Override
