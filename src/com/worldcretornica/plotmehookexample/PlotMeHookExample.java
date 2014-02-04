@@ -57,6 +57,10 @@ public class PlotMeHookExample extends JavaPlugin {
     		            }
 		            }
 		        }
+		        
+		        //I haven't tested the code below here yet but it should be like this
+			p.sendMessage("You have " + PlotManager.getNbOwnedPlot(p, p.getWorld()) + " plots in this world.";
+
 		    }
 		}
 		return false;
