@@ -11,7 +11,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.worldcretornica.plotme_core.Plot;
 import com.worldcretornica.plotme_core.PlotMapInfo;
 import com.worldcretornica.plotme_core.PlotMeCoreManager;
-import com.worldcretornica.plotme_core.bukkit.PlotMe_CorePlugin;
 import com.worldcretornica.plotme_core.bukkit.api.BukkitLocation;
 import com.worldcretornica.plotme_core.bukkit.api.BukkitPlayer;
 
@@ -29,8 +28,7 @@ public class PlotMeHookExample extends JavaPlugin {
         // put code that detects if plotme plugin is present
         PluginManager pm = Bukkit.getPluginManager();
         if (pm.isPluginEnabled("PlotMe")) {
-            PlotMe_CorePlugin plotmeplugin = (PlotMe_CorePlugin) pm.getPlugin("PlotMe");
-            plotAPI = plotmeplugin.getAPI().getPlotMeCoreManager();
+            plotAPI = PlotMeCoreManager.getInstance();
             getLogger().info("Hooked to PlotMe!");
         }
     }
@@ -51,7 +49,7 @@ public class PlotMeHookExample extends JavaPlugin {
 
                     // The plotmanager class contains static methods. Note that
                     // this is not the case for PlotMe-Core
-                    String id = PlotMeCoreManager.getPlotId(player);
+                    String id = plotAPI.getPlotId(player);
 
                     if (id.equals("")) {
                         p.sendMessage("You are not standing in a plot.");
@@ -62,12 +60,12 @@ public class PlotMeHookExample extends JavaPlugin {
                         if (plot != null) {
                             p.sendMessage("You are standing in plot " + plot.getId() + ", owned by " + plot.getOwner());
 
-                            Location bottom = ((BukkitLocation) PlotMeCoreManager.getPlotBottomLoc(player.getWorld(), plot.getId())).getLocation();
-                            Location top = ((BukkitLocation) PlotMeCoreManager.getPlotTopLoc(player.getWorld(), plot.getId())).getLocation();
+                            Location bottom = ((BukkitLocation) plotAPI.getPlotBottomLoc(player.getWorld(), plot.getId())).getLocation();
+                            Location top = ((BukkitLocation) plotAPI.getPlotTopLoc(player.getWorld(), plot.getId())).getLocation();
 
                             p.sendMessage("The plot coords are " + bottom.toString() + " to " + top.toString());
 
-                            Location home = ((BukkitLocation) PlotMeCoreManager.getPlotHome(player.getWorld(), plot.getId())).getLocation();
+                            Location home = ((BukkitLocation) plotAPI.getPlotHome(player.getWorld(), plot.getId())).getLocation();
 
                             p.sendMessage("The plot home is located at " + home.toString());
                         } else {
