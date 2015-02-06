@@ -11,12 +11,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.worldcretornica.plotme_core.Plot;
 import com.worldcretornica.plotme_core.PlotMapInfo;
 import com.worldcretornica.plotme_core.PlotMeCoreManager;
-import com.worldcretornica.plotme_core.bukkit.api.BukkitLocation;
-import com.worldcretornica.plotme_core.bukkit.api.BukkitPlayer;
+import com.worldcretornica.plotme_core.bukkit.*;
 
 public class PlotMeHookExample extends JavaPlugin {
 
     private PlotMeCoreManager plotAPI;
+    private PlotMe_CorePlugin plotmeBukkitHook;
 
     @Override
     public void onDisable() {
@@ -28,6 +28,7 @@ public class PlotMeHookExample extends JavaPlugin {
         // put code that detects if plotme plugin is present
         PluginManager pm = Bukkit.getPluginManager();
         if (pm.isPluginEnabled("PlotMe")) {
+            plotmeBukkitHook = (PlotMe_CorePlugin) pm.getPlugin("PlotMe");
             plotAPI = PlotMeCoreManager.getInstance();
             getLogger().info("Hooked to PlotMe!");
         }
@@ -39,7 +40,7 @@ public class PlotMeHookExample extends JavaPlugin {
             if (sender instanceof Player) {
                 Player p = (Player) sender;
 
-                BukkitPlayer player = new BukkitPlayer(p);
+                BukkitPlayer player = (BukkitPlayer) plotmeBukkitHook.wrapPlayer(p);
                 PlotMapInfo pmi = plotAPI.getMap(player);
 
                 if (pmi == null) {
