@@ -68,6 +68,20 @@ public class PlotMeHookExample extends JavaPlugin {
                             Location home = ((BukkitLocation) plotAPI.getPlotHome(player.getWorld(), plot.getId())).getLocation();
 
                             p.sendMessage("The plot home is located at " + home.toString());
+                            
+                            // Each plugin can set his own properties
+                            // The properties will be deleted if the plot is reset
+                            // The properties will be moved if the plot is moved
+                            
+                            // Set property
+                            // with plot.setPlotProperty() or PlotMeCoreManager.getInstance().setPlotProperty()  
+                            String propertyname = "What happens if you eat all the potatoes";
+                            plot.setPlotProperty(this.getName(), propertyname, "they're all gone");
+
+                            // Get the value of the property later
+                            // with plot.getPlotProperty() or PlotMeCoreManager.getInstance().getPlotProperty()
+                            String value = plot.getPlotProperty(this.getName(), propertyname);
+                            p.sendMessage("The property of what happens if you eat all the potatoes is : " + value);
                         } else {
                             p.sendMessage("You are standing in an unclaimed plot.");
                         }
