@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.worldcretornica.plotme_core.Plot;
 import com.worldcretornica.plotme_core.PlotMapInfo;
 import com.worldcretornica.plotme_core.PlotMeCoreManager;
+import com.worldcretornica.plotme_core.bukkit.api.*;
 import com.worldcretornica.plotme_core.bukkit.*;
 
 public class PlotMeHookExample extends JavaPlugin {
