@@ -1,5 +1,12 @@
 package com.worldcretornica.plotmehookexample;
 
+import com.worldcretornica.plotme_core.Plot;
+import com.worldcretornica.plotme_core.PlotId;
+import com.worldcretornica.plotme_core.PlotMapInfo;
+import com.worldcretornica.plotme_core.PlotMeCoreManager;
+import com.worldcretornica.plotme_core.bukkit.PlotMe_CorePlugin;
+import com.worldcretornica.plotme_core.bukkit.api.BukkitLocation;
+import com.worldcretornica.plotme_core.bukkit.api.BukkitPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -7,12 +14,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import com.worldcretornica.plotme_core.Plot;
-import com.worldcretornica.plotme_core.PlotMapInfo;
-import com.worldcretornica.plotme_core.PlotMeCoreManager;
-import com.worldcretornica.plotme_core.bukkit.api.*;
-import com.worldcretornica.plotme_core.bukkit.*;
 
 public class PlotMeHookExample extends JavaPlugin {
 
@@ -51,9 +52,9 @@ public class PlotMeHookExample extends JavaPlugin {
 
                     // The plotmanager class contains static methods. Note that
                     // this is not the case for PlotMe-Core
-                    String id = plotAPI.getPlotId(player);
+                    PlotId id = plotAPI.getPlotId(player);
 
-                    if (id.equals("")) {
+                    if (id == null) {
                         p.sendMessage("You are not standing in a plot.");
                     } else {
                         Plot plot = plotAPI.getPlotById(player); // this function supports many arguments;
@@ -65,11 +66,11 @@ public class PlotMeHookExample extends JavaPlugin {
                             Location bottom = ((BukkitLocation) plotAPI.getPlotBottomLoc(player.getWorld(), plot.getId())).getLocation();
                             Location top = ((BukkitLocation) plotAPI.getPlotTopLoc(player.getWorld(), plot.getId())).getLocation();
 
-                            p.sendMessage("The plot coords are " + bottom.toString() + " to " + top.toString());
+                            p.sendMessage("The plot coords are " + bottom + " to " + top);
 
                             Location home = ((BukkitLocation) plotAPI.getPlotHome(player.getWorld(), plot.getId())).getLocation();
 
-                            p.sendMessage("The plot home is located at " + home.toString());
+                            p.sendMessage("The plot home is located at " + home);
                             
                             // Each plugin can set his own properties
                             // The properties will be deleted if the plot is reset
