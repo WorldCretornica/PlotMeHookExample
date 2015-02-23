@@ -92,7 +92,7 @@ public class PlotMeHookExample extends JavaPlugin {
                 }
 
                 // I haven't tested the code below here yet but it should be like this
-                p.sendMessage("You have " + plotAPI.getNbOwnedPlot(player.getUniqueId(), player.getWorld().getName()) + " plots in this world.");
+                p.sendMessage("You have " + plotAPI.getOwnedPlotCount(player.getUniqueId(), player.getWorld().getName()) + " plots in this world.");
             }
         }
         return false;
