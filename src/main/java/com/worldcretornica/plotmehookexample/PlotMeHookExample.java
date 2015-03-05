@@ -41,8 +41,12 @@ public class PlotMeHookExample extends JavaPlugin {
         if (label.equalsIgnoreCase("plotmehook")) {
             if (sender instanceof Player) {
                 Player p = (Player) sender;
-
+                //You can get an IPlayer and then cast it to a BukkitPlayer like this:
                 BukkitPlayer player = (BukkitPlayer) plotmeBukkitHook.wrapPlayer(p);
+                //BukkitPlayer can also be downcasted like this:
+                //IPlayer player2 = (IPlayer) player;
+                // You cannot cast a player found in the bukkit libraries to an IPlayer or BukkitPlayer
+                // The same goes for all the other PlotMe "I" classes.
                 PlotMapInfo pmi = plotAPI.getMap(player);
 
                 if (pmi == null) {
@@ -50,15 +54,13 @@ public class PlotMeHookExample extends JavaPlugin {
                 } else {
                     p.sendMessage("There are " + pmi.getNbPlots() + " plots in this world");
 
-                    // The plotmanager class contains static methods. Note that
-                    // this is not the case for PlotMe-Core
+                    // PlotMe-Core does not contain any static methods
                     PlotId id = plotAPI.getPlotId(player);
 
                     if (id == null) {
                         p.sendMessage("You are not standing in a plot.");
                     } else {
-                        Plot plot = plotAPI.getPlotById(player); // this function supports many arguments;
-                                                                 // BukkitWorld, BukkitLocation, Id, BukkitEntity, etc..
+                        Plot plot = plotAPI.getPlotById(id, player); // this function supports many arguments;
 
                         if (plot != null) {
                             p.sendMessage("You are standing in plot " + plot.getId() + ", owned by " + plot.getOwner());
