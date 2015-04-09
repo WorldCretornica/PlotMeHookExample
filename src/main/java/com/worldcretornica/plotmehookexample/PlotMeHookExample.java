@@ -4,11 +4,10 @@ import com.worldcretornica.plotme_core.Plot;
 import com.worldcretornica.plotme_core.PlotId;
 import com.worldcretornica.plotme_core.PlotMapInfo;
 import com.worldcretornica.plotme_core.PlotMeCoreManager;
+import com.worldcretornica.plotme_core.api.ILocation;
 import com.worldcretornica.plotme_core.bukkit.PlotMe_CorePlugin;
-import com.worldcretornica.plotme_core.bukkit.api.BukkitLocation;
 import com.worldcretornica.plotme_core.bukkit.api.BukkitPlayer;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -60,17 +59,17 @@ public class PlotMeHookExample extends JavaPlugin {
                     if (id == null) {
                         p.sendMessage("You are not standing in a plot.");
                     } else {
-                        Plot plot = plotAPI.getPlotById(id, player); // this function supports many arguments;
+                        Plot plot = plotAPI.getPlotById(id); // this function supports many arguments;
 
                         if (plot != null) {
                             p.sendMessage("You are standing in plot " + plot.getId() + ", owned by " + plot.getOwner());
 
-                            Location bottom = ((BukkitLocation) plotAPI.getPlotBottomLoc(player.getWorld(), plot.getId())).getLocation();
-                            Location top = ((BukkitLocation) plotAPI.getPlotTopLoc(player.getWorld(), plot.getId())).getLocation();
+                            ILocation bottom = plotAPI.getPlotBottomLoc(plot.getId());
+                            ILocation top = plotAPI.getPlotTopLoc(plot.getId());
 
                             p.sendMessage("The plot coords are " + bottom + " to " + top);
 
-                            Location home = ((BukkitLocation) plotAPI.getPlotHome(player.getWorld(), plot.getId())).getLocation();
+                            ILocation home = plotAPI.getPlotHome(plot.getId());
 
                             p.sendMessage("The plot home is located at " + home);
                             
