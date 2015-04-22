@@ -59,17 +59,17 @@ public class PlotMeHookExample extends JavaPlugin {
                     if (id == null) {
                         p.sendMessage("You are not standing in a plot.");
                     } else {
-                        Plot plot = plotAPI.getPlotById(id); // this function supports many arguments;
+                        Plot plot = plotAPI.getPlotById(id, world); // this function supports many arguments;
 
                         if (plot != null) {
                             p.sendMessage("You are standing in plot " + plot.getId() + ", owned by " + plot.getOwner());
 
-                            ILocation bottom = plotAPI.getPlotBottomLoc(plot.getId());
-                            ILocation top = plotAPI.getPlotTopLoc(plot.getId());
+                            ILocation bottom = plotAPI.getPlotBottomLoc(world, plot.getId());
+                            ILocation top = plotAPI.getPlotTopLoc(world, plot.getId());
 
                             p.sendMessage("The plot coords are " + bottom + " to " + top);
 
-                            ILocation home = plotAPI.getPlotHome(plot.getId());
+                            ILocation home = plotAPI.getPlotHome(plot.getId(), player.getWorld());
 
                             p.sendMessage("The plot home is located at " + home);
                             
