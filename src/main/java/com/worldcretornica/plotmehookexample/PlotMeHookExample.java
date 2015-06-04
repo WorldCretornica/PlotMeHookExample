@@ -2,9 +2,9 @@ package com.worldcretornica.plotmehookexample;
 
 import com.worldcretornica.plotme_core.Plot;
 import com.worldcretornica.plotme_core.PlotId;
-import com.worldcretornica.plotme_core.PlotMapInfo;
 import com.worldcretornica.plotme_core.PlotMeCoreManager;
-import com.worldcretornica.plotme_core.api.ILocation;
+import com.worldcretornica.plotme_core.api.Location;
+import com.worldcretornica.plotme_core.api.Vector;
 import com.worldcretornica.plotme_core.bukkit.PlotMe_CorePlugin;
 import com.worldcretornica.plotme_core.bukkit.api.BukkitPlayer;
 import org.bukkit.Bukkit;
@@ -46,12 +46,13 @@ public class PlotMeHookExample extends JavaPlugin {
                 //IPlayer player2 = (IPlayer) player;
                 // You cannot cast a player found in the bukkit libraries to an IPlayer or BukkitPlayer
                 // The same goes for all the other PlotMe "I" classes.
-                PlotMapInfo pmi = plotAPI.getMap(player);
+                boolean isPlotWorld = plotAPI.isPlotWorld(player);
 
-                if (pmi == null) {
+                if (!isPlotWorld) {
                     p.sendMessage("This isn't a plot world");
                 } else {
-                    p.sendMessage("There are " + pmi.getNbPlots() + " plots in this world");
+                    p.sendMessage("There are " + plotmeBukkitHook.getAPI().getSqlManager().getWorldPlotCount(player.getWorld()) + " plots in "
+                            + "this world");
 
                     // PlotMe-Core does not contain any static methods
                     PlotId id = plotAPI.getPlotId(player);
@@ -59,17 +60,17 @@ public class PlotMeHookExample extends JavaPlugin {
                     if (id == null) {
                         p.sendMessage("You are not standing in a plot.");
                     } else {
-                        Plot plot = plotAPI.getPlotById(id, world); // this function supports many arguments;
+                        Plot plot = plotAPI.getPlotById(id, player.getWorld()); // this function supports many arguments;
 
                         if (plot != null) {
                             p.sendMessage("You are standing in plot " + plot.getId() + ", owned by " + plot.getOwner());
 
-                            ILocation bottom = plotAPI.getPlotBottomLoc(world, plot.getId());
-                            ILocation top = plotAPI.getPlotTopLoc(world, plot.getId());
+                            Vector bottom = plotAPI.getPlotBottomLoc(player.getWorld(), plot.getId());
+                            Vector top = plotAPI.getPlotTopLoc(player.getWorld(), plot.getId());
 
                             p.sendMessage("The plot coords are " + bottom + " to " + top);
 
-                            ILocation home = plotAPI.getPlotHome(plot.getId(), player.getWorld());
+                            Location home = plotAPI.getPlotHome(plot.getId(), player.getWorld());
 
                             p.sendMessage("The plot home is located at " + home);
                             
@@ -93,7 +94,7 @@ public class PlotMeHookExample extends JavaPlugin {
                 }
 
                 // I haven't tested the code below here yet but it should be like this
-                p.sendMessage("You have " + plotAPI.getOwnedPlotCount(player.getUniqueId(), player.getWorld().getName()) + " plots in this world.");
+                p.sendMessage("You have " + plotAPI.getOwnedPlotCount(player.getUniqueId(), player.getWorld()) + " plots in this world.");
             }
         }
         return false;
