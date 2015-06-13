@@ -8,6 +8,7 @@
     <build>
         <defaultGoal>clean package install</defaultGoal>
         <finalName>PlotMeHookExample</finalName>
+        <outputDirectory>../plugins</outputDirectory>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
