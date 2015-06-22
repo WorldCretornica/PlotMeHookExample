@@ -1,7 +1,6 @@
 package com.worldcretornica.plotmehookexample;
 
 import com.worldcretornica.plotme_core.Plot;
-import com.worldcretornica.plotme_core.PlotId;
 import com.worldcretornica.plotme_core.PlotMeCoreManager;
 import com.worldcretornica.plotme_core.api.Location;
 import com.worldcretornica.plotme_core.api.Vector;
@@ -55,41 +54,38 @@ public class PlotMeHookExample extends JavaPlugin {
                             + "this world");
 
                     // PlotMe-Core does not contain any static methods
-                    PlotId id = plotAPI.getPlotId(player);
+                    Plot plot = plotAPI.getPlot(player);
 
-                    if (id == null) {
+                    if (plot == null) {
                         p.sendMessage("You are not standing in a plot.");
                     } else {
-                        Plot plot = plotAPI.getPlotById(id, player.getWorld()); // this function supports many arguments;
+                        p.sendMessage("You are standing in plot " + plot.getId() + ", owned by " + plot.getOwner());
 
-                        if (plot != null) {
-                            p.sendMessage("You are standing in plot " + plot.getId() + ", owned by " + plot.getOwner());
+                        Vector bottom = plot.getPlotBottomLoc();
+                        Vector top = plot.getPlotTopLoc();
 
-                            Vector bottom = plotAPI.getPlotBottomLoc(player.getWorld(), plot.getId());
-                            Vector top = plotAPI.getPlotTopLoc(player.getWorld(), plot.getId());
+                        p.sendMessage("The plot coords are " + bottom + " to " + top);
 
-                            p.sendMessage("The plot coords are " + bottom + " to " + top);
+                        Location home = plotAPI.getPlotHome(plot.getId(), player.getWorld());
 
-                            Location home = plotAPI.getPlotHome(plot.getId(), player.getWorld());
+                        p.sendMessage("The plot home is located at " + home);
 
-                            p.sendMessage("The plot home is located at " + home);
-                            
-                            // Each plugin can set his own properties
-                            // The properties will be deleted if the plot is reset
-                            // The properties will be moved if the plot is moved
-                            
-                            // Set property
-                            // with plot.setPlotProperty() or PlotMeCoreManager.getInstance().setPlotProperty()  
-                            String propertyname = "What happens if you eat all the potatoes";
-                            plot.setPlotProperty(this.getName(), propertyname, "they're all gone");
+                        // Each plugin can set his own properties
+                        // The properties will be deleted if the plot is reset
+                        // The properties will be moved if the plot is moved
 
-                            // Get the value of the property later
-                            // with plot.getPlotProperty() or PlotMeCoreManager.getInstance().getPlotProperty()
-                            String value = plot.getPlotProperty(this.getName(), propertyname);
-                            p.sendMessage("The property of what happens if you eat all the potatoes is : " + value);
-                        } else {
-                            p.sendMessage("You are standing in an unclaimed plot.");
-                        }
+                        // Set property
+                        // with plot.setPlotProperty() or PlotMeCoreManager.getInstance().setPlotProperty()
+                        String propertyname = "What happens if you eat all the potatoes";
+                        plot.setPlotProperty(this.getName(), propertyname, "they're all gone");
+
+                        // Get the value of the property later
+                        // with plot.getPlotProperty() or PlotMeCoreManager.getInstance().getPlotProperty()
+                        String value = plot.getPlotProperty(this.getName(), propertyname);
+                        p.sendMessage("The property of what happens if you eat all the potatoes is : " + value);
+
+                        //save the plot and apply changes.
+                        plotmeBukkitHook.getAPI().getSqlManager().savePlot(plot);
                     }
                 }
 
